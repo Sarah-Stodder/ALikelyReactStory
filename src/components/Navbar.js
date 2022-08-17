@@ -19,6 +19,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Avatar from '@mui/material/Avatar';
 
 
+
 const drawerWidth = 240;
 const navItems = ['Home', 'Find Books', 'My Books',<Avatar src="/broken-image.jpg" href= "#" alt = "Sarah"/>];
 
@@ -149,7 +150,7 @@ export default function Navbar({children}) {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={{ p: 3 }}>
+      <Box component="main" sx={{  flexGrow: 1, p: 3 }}>
         <Toolbar />
          {children}
       </Box>
