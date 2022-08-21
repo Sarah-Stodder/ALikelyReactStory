@@ -20,7 +20,7 @@ export default function useLogin(loginCreds, setLoginCreds, setError) {
                         setUser(response.user)
                         setLoginCreds({})
                         setAlert({msg:'Thanks for logging in',cat:'success'})
-                        navigate('/')
+                        navigate('/ALikelyReactStory"')
                     }
                     setError(response.error);
                 }

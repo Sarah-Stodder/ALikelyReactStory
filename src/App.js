@@ -25,7 +25,7 @@ function App() {
     <Navbar/>
     <Box sx={{minHeight: '90vh'}}>
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
+        <Route path="/ALikelyReactStory" element={<HomePage/>}/>
         <Route path="/login" element={ <Login /> }/>
         <Route path="/logout" element={<Logout/>}/>
         <Route path="/books" element={<RequireAccount redirectTo={'/login'}><BookList/></RequireAccount>}/>
