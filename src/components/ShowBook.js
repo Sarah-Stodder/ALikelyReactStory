@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
+import {BookContext} from '../context/BookContext';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -8,12 +9,16 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box'
-import Rating from './Raiting';
 import RemoveCircleOutlinedIcon from '@mui/icons-material/RemoveCircleOutlined';
+import useBook from '../hooks/useBook';
+import CircularProgress from '@mui/material/CircularProgress';
+import {useParams, useNavigate} from 'react-router-dom';
+import Error from './Error';
+import Button from './Button';
+import { AppContext } from '../context/AppContext';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -25,73 +30,83 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-const books=[{
-  "id":2,
-  "title":"Pride and prejudice",
-  "author": "Jane Austen",
-  "pages":432,
-  "summary": "Set in England in the early 19th century, Pride and Prejudice tells the story of Mr and Mrs Bennet's five unmarried daughters after the rich and eligible Mr Bingley and his status-conscious friend, Mr Darcy, have moved into their neighbourhood. While Bingley takes an immediate liking to the eldest Bennet daughter, Jane, Darcy has difficulty adapting to local society and repeatedly clashes with the second-eldest Bennet daughter, Elizabeth.",
-  "img":"https://i.pinimg.com/originals/14/d8/ea/14d8ea37846191d498ed5200bb560524.jpg",
-  "subject":"Historical Fiction"
- 
-},{
-  "id":3,
-  "title":"John Dies at The End",
-  "author": "Jason Pargin",
-  "pages":464,
-  "summary": "On the street they call it Soy Sauce, it is a drug that promises an out-of-body experience with each hit, and lets users drift across time and dimensions. But some who come back are no longer human. Suddenly, a silent otherworldly invasion is underway, and mankind needs a hero.",
-  "img":"https://mpd-biblio-covers.imgix.net/9781429956789.jpg",
-  "subject":"Horror"    
-},{
-  "id":5,
-  "title":"The Subtle Art of Not Giving a F*ck",
-  "author": "Mark Manson",
-  "pages":224,
-  "summary": "The Subtle Art of Not Giving a F*ck is a book that challenges the conventions of self-help by inviting the reader to NOT try, say no often and embrace negative thinking. Not giving a f*ck is about being comfortable with being different and caring about something more important than adversity.",
-  "img":"https://www.wayneliew.com/content/images/size/w1460/wordpress/2020/06/the-subtle-art-of-not-giving-a-fck-book-cover.jpg",
-  "subject":"Self Help"   
-}]
 
-export default function ShowBook({book}) {
+
+export default function ShowBook() {
   const [expanded, setExpanded] = React.useState(false);
-  book = books[2]
+  const {setAlert} = useContext(AppContext)
+  const {addBook, removeBook, readingList} = useContext(BookContext)
+  const {bookId} =  useParams()
   
+  const {book, error} = useBook(bookId);
 
+  const navigate = useNavigate();
+  
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const handleRemoveBook = () => {
+    removeBook(book);
+    setAlert({msg:`${book.title} Removed From Reading List`,cat:'warning'})
+  };
+  const handleAddBook = () => {
+    addBook(book);
+    setAlert({msg:`${book.title} Added to Reading List`,cat:'info'});
+  };
+  
+
+
+  if (error){
+    return (
+      <Box sx={{display:"flex"}}>
+        <Error>{error}</Error>
+      </Box>
+    )
+  }
+  if(!book){
+        return(
+        <Box sx={{display:"flex"}}>
+          <CircularProgress/>
+        </Box>
+        )
+      }
+  
+
 
   return (
+    <>
+    <Button onClick={() => navigate('/books')}>Back</Button>
     <Box sx={{minWidth:"300px", maxWidth:"1000px", display:"flex", justifyContent:"center",  mx:"auto" }}> 
     <Card sx={{ maxWidth: 345}}>
       <CardHeader
        
-       title={book.title}
-        subheader = {book.author}
+       title={book?.title}
+        subheader = {book?.author}
         
       />
       <CardMedia
         component="img"
-        image={book.img}
-        alt={`Book cover for ${book.title}`}
+        height="194"
+        image={book?.img}
+        alt={`Book cover for ${book?.title}`}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {book.subject}
+          {book?.subject}
           <br />
-          Page Count: {book.pages}
+          Page Count: {book?.pages}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to my books">
-          <AddIcon />
+      {(readingList.map(x=>x.id).includes(book.id)) ?
+        <IconButton  aria-label="remove from my books" onClick={()=> handleRemoveBook(book)}>
+           <RemoveCircleOutlinedIcon /> Remove from my books
         </IconButton>
-        <IconButton aria-label="remove from my books">
-                        <RemoveCircleOutlinedIcon />
-                    </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
+        :
+        <IconButton aria-label="add to my books" onClick={()=>handleAddBook(book)} >
+          <AddIcon /> Add Book
         </IconButton>
+      }
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -105,12 +120,13 @@ export default function ShowBook({book}) {
         <CardContent>
           <Typography paragraph>Synopsis: </Typography>
           <Typography paragraph>
-          {book.summary}
+          {book?.summary}
           </Typography>
         </CardContent>
       </Collapse>
       
     </Card>
     </Box>
+    </>
   );
 }

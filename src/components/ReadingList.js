@@ -14,6 +14,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Error from './Error';
 import {BookContext} from '../context/BookContext';
 import { useNavigate } from 'react-router-dom';
+import Button from './Button';
 
 const books=[{
     "id":2,
@@ -44,42 +45,31 @@ const books=[{
 ]
 //would like to make it where this will change based to user books once they hit a button.
 
-    export default function BookList() {
-        const {bookList, setBookList} = useContext(BookContext)
-        const {error, books} = useBooks()
-        setBookList(books)
+    export default function ReadingList() {
+        const {readingList, removeBook, clearList} = useContext(BookContext)
 
         const navigate = useNavigate()
 
-        const handleInfo=()=>{
-            console.log("something")
-
-        };
-      
-        if(error){
-          return(
-            <Box sx={{display:"flex"}}>
-              <Error>{error}</Error>
-            </Box>
-          )
-        }
-      
-        if(!bookList){
+        if(!readingList){
           return(
             <Box sx={{display:"flex"}}>
               <CircularProgress/>
             </Box>
           )
         }
-    
+        
+      
 
   return (
     <>
     <Box  sx={{display:"flex",alignItems:"center",mx:"auto"}}>
-    <Typography variant='h3'>Books</Typography>
+    <Typography variant='h3'> Your Books</Typography>
     </Box>
+    <Typography sx={{display: 'flex', justifyContent: 'center'}}>
+          <Button key="clear" color="success" sx ={{mb:5}} onClick={()=>{clearList()}}>Clear List</Button>
+          </Typography>
     <ImageList cols={3} >
-        {bookList?.map((book)=>(
+        {readingList?.map((book)=>(
             <ImageListItem key={book?.img}>
                 <img sx={{height:"200px"}} src={book?.img} srcSet={book?.img} alt={book?.title}  loading="lazy"/>
                 <ImageListItemBar
