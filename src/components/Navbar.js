@@ -115,7 +115,7 @@ const Navbar = () => {
             variant="h6"
             noWrap
             component="a"
-            href=""
+            href="/ALikelyReactStory"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
