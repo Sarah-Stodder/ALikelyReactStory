@@ -2,9 +2,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import MyReadingList from './views/MyReadingList';
 import Box from '@mui/material/Box';
-import {Routes, Route, Navigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { AppContext } from './context/AppContext';
+import {Routes, Route} from 'react-router-dom';
 import HomePage from './views/HomePage';
 import Login from './views/Login';
 import Logout from './views/Logout';
@@ -18,7 +16,7 @@ import  SnackBar  from './components/SnackBar';
 
 
 function App() {
-  const { user } = useContext(AppContext);
+  
   return (
     <>
     <SnackBar/>

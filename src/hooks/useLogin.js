@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react'
+import {useEffect, useContext} from 'react'
 import { AppContext } from '../context/AppContext'
 import { CancelToken } from 'apisauce'
 import { getUser } from '../api/apiBasicAuth'
