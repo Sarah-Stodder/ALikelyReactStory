@@ -42,7 +42,7 @@ const Navbar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
         <Box sx={{mr:3}}>
-          <Link to='/ALikelyReactStory"'>
+          <Link to='/ALikelyReactStory'>
             <img height="50px" className='p2' alt="als Logo" src="https://res.cloudinary.com/dxfkurrkj/image/upload/v1661018923/Lovepik_com-401498089-book-book-icon-free-vector-illustration-material_bjyrmt.png"/>
           </Link>
           </Box>
