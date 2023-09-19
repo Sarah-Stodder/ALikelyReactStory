@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ALikelyReactStory/static/css/main.073c9b0a.css",
-    "main.js": "/ALikelyReactStory/static/js/main.6a28f4f1.js",
+    "main.js": "/ALikelyReactStory/static/js/main.f12b1656.js",
     "static/js/787.4cdbb351.chunk.js": "/ALikelyReactStory/static/js/787.4cdbb351.chunk.js",
     "index.html": "/ALikelyReactStory/index.html",
     "main.073c9b0a.css.map": "/ALikelyReactStory/static/css/main.073c9b0a.css.map",
-    "main.6a28f4f1.js.map": "/ALikelyReactStory/static/js/main.6a28f4f1.js.map",
+    "main.f12b1656.js.map": "/ALikelyReactStory/static/js/main.f12b1656.js.map",
     "787.4cdbb351.chunk.js.map": "/ALikelyReactStory/static/js/787.4cdbb351.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.6a28f4f1.js"
+    "static/js/main.f12b1656.js"
   ]
 }
